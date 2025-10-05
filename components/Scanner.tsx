@@ -7,7 +7,7 @@ declare global {
 }
 
 import React, { useRef, useEffect, useCallback } from 'react';
-import { LibraryType } from '../types';
+import { LibraryType } from '../types.ts';
 
 const Scanner = ({ library, onResult, isScanning }) => {
   const videoRef = useRef(null);

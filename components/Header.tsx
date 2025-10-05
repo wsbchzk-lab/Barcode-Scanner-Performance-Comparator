@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { LibraryType } from '../types';
+import { LibraryType } from '../types.ts';
 
 const Header = ({ selectedLibrary, onLibraryChange }) => {
   return (

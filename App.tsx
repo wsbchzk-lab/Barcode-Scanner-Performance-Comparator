@@ -1,9 +1,9 @@
 
 import React, { useState, useCallback } from 'react';
-import { LibraryType } from './types';
-import Header from './components/Header';
-import Scanner from './components/Scanner';
-import ResultPanel from './components/ResultPanel';
+import { LibraryType } from './types.ts';
+import Header from './components/Header.tsx';
+import Scanner from './components/Scanner.tsx';
+import ResultPanel from './components/ResultPanel.tsx';
 
 const App = () => {
   const [selectedLibrary, setSelectedLibrary] = useState(LibraryType.ZXing);
