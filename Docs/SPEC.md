@@ -47,30 +47,30 @@ Webブラウザ上で動作する複数のバーコードスキャナーライ�
 
 ### 3.2. コンポーネント詳細
 
-#### `Header.tsx` (ヘッダー)
+#### `components/Header.js` (ヘッダー)
 - 画面上部に固定表示される。
 - アプリケーションタイトル「Barcode Scanner Comparator」を左側に表示する。
 - ライブラリ選択ボタンを右側に配置する。
   - `ZXing`と`QuaggaJS`のボタンが並び、選択中のライブラリがハイライト（シアン色の背景）される。
   - 背景は半透明のぼかし（`backdrop-blur-sm`）効果を適用する。
 
-#### `Scanner.tsx` (スキャナービュー)
+#### `components/Scanner.js` (スキャナービュー)
 - 画面の主要部分を占める（lgでは左2/3）。
 - `<video>`要素でカメラ映像をアスペクト比を保ちながら表示（`object-cover`）。
 - 映像の中央に、半透明のシアン色の枠線（`border-cyan-400/50`）をオーバーレイ表示し、ユーザーがバーコードを合わせる目安とする。この枠線には微かなアニメーション（`animate-pulse`）を適用する。
 - ライブラリ切り替え中は、「Initializing scanner...」というメッセージをオーバーレイ表示する。
 
-#### `ResultPanel.tsx` (結果パネル)
+#### `components/ResultPanel.js` (結果パネル)
 - スキャンに関するすべての情報を集約して表示する（lgでは右1/3）。
 - **LAST SCAN RESULT:** 最新の読み取り結果を表示する。スキャン待機中は「Waiting for scan...」と表示。
 - **PERFORMANCE:** 「Scan Time」と「Library」を並べて表示。スキャン時間は`XXX ms`の形式。
 - **SCAN HISTORY:** 過去のスキャン結果をタイムスタンプと共にリスト表示する。
 
-#### `App.tsx` (ルートコンポーネント)
+#### `App.js` (ルートコンポーネント)
 - 上記3つのコンポーネントを統合し、アプリケーション全体のレイアウトを構築する。
 - 画面下部にフッターを配置し、「Point your camera at a barcode to test the selected library.」という案内文を表示する。
 
-## 4. 状態管理 (`App.tsx`)
+## 4. 状態管理 (`App.js`)
 
 - `selectedLibrary`: ユーザーが選択したライブラリ (`LibraryType`)。
 - `lastResult`: 最新のスキャン結果 (オブジェクトまたは`null`)。
@@ -84,22 +84,22 @@ Webブラウザ上で動作する複数のバーコードスキャナーライ�
 - `tailwindcss`: スタイリングフレームワーク（CDN経由）。
 - `@zxing/library`: ZXing-JSライブラリ（CDN経由）。
 - `quagga`: QuaggaJSライブラリ（CDN経由）。
-- `@babel/standalone`: ブラウザ上でTSX/JSXをJavaScriptに変換するためのトランスパイラ（CDN経由）。
+- `@babel/standalone`: ブラウザ上でJSXをJavaScriptに変換するためのトランスパイラ（CDN経由）。
 
 ## 6. ファイル構成
 
 - `index.html`: アプリケーションのエントリーポイント。CDNライブラリとBabelを読み込む。
 - `metadata.json`: アプリケーション名とカメラ権限のリクエストを定義。
-- `index.tsx`: ReactアプリケーションをDOMにマウントする。
-- `types.ts`: `LibraryType`などの共通定数を定義。
-- `App.tsx`: メインのアプリケーションコンポーネント。
+- `index.js`: ReactアプリケーションをDOMにマウントする。
+- `types.js`: `LibraryType`などの共通定数を定義。
+- `App.js`: メインのアプリケーションコンポーネント。
 - `components/`
-  - `Header.tsx`
-  - `Scanner.tsx`
-  - `ResultPanel.tsx`
+  - `Header.js`
+  - `Scanner.js`
+  - `ResultPanel.js`
 - `Docs/`
   - `RULE.txt`
   - `SPEC.md`
   - `HISTORY.md`
 
-**注記:** ソースコードはTypeScriptの構文（`.tsx`, `.ts`）で記述されていますが、ビルドプロセスは不要です。`index.html`で読み込まれたBabelが、ブラウザ上でリアルタイムにコードをJavaScriptに変換して実行します。このため、`import`文では必ず`.tsx`や`.ts`といったファイル拡張子を含めた相対パスを指定する必要があります。
+**注記:** ソースコードはJSX構文を含むJavaScript（`.js`）で記述されていますが、ビルドプロセスは不要です。`index.html`で読み込まれたBabelが、ブラウザ上でリアルタイムにコードをプレーンなJavaScriptに変換して実行します。このため、`import`文では必ず`.js`といったファイル拡張子を含めた相対パスを指定する必要があります。
