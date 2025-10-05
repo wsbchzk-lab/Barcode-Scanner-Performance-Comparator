@@ -1,4 +1,3 @@
-
 # アプリケーション仕様書: Barcode Scanner Comparator
 
 ## 1. 概要
@@ -81,7 +80,7 @@ Webブラウザ上で動作する複数のバーコードスキャナーライ�
 
 ## 5. 外部依存関係
 
-- `react`, `react-dom`: UIライブラリ（`importmap`経由）。
+- `react@18.2.0`, `react-dom@18.2.0`: UIライブラリ。安定性を確保するため、`importmap`経由で特定の安定バージョンを指定。
 - `tailwindcss`: スタイリングフレームワーク（CDN経由）。
 - `@zxing/library`: ZXing-JSライブラリ（CDN経由）。
 - `quagga`: QuaggaJSライブラリ（CDN経由）。
