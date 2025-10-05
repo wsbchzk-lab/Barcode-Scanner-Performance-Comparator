@@ -1,25 +1,25 @@
 
 import React, { useState, useCallback } from 'react';
-import { LibraryType, ScanResult } from './types';
+import { LibraryType } from './types';
 import Header from './components/Header';
 import Scanner from './components/Scanner';
 import ResultPanel from './components/ResultPanel';
 
-const App: React.FC = () => {
-  const [selectedLibrary, setSelectedLibrary] = useState<LibraryType>(LibraryType.ZXing);
-  const [lastResult, setLastResult] = useState<ScanResult | null>(null);
-  const [scanHistory, setScanHistory] = useState<ScanResult[]>([]);
-  const [lastScanTime, setLastScanTime] = useState<number | null>(null);
-  const [isScanning, setIsScanning] = useState<boolean>(true);
+const App = () => {
+  const [selectedLibrary, setSelectedLibrary] = useState(LibraryType.ZXing);
+  const [lastResult, setLastResult] = useState(null);
+  const [scanHistory, setScanHistory] = useState([]);
+  const [lastScanTime, setLastScanTime] = useState(null);
+  const [isScanning, setIsScanning] = useState(true);
 
-  const handleResult = useCallback((result: string, scanTime: number) => {
-    const newResult: ScanResult = { text: result, timestamp: Date.now() };
+  const handleResult = useCallback((result, scanTime) => {
+    const newResult = { text: result, timestamp: Date.now() };
     setLastResult(newResult);
     setScanHistory(prev => [newResult, ...prev.slice(0, 9)]);
     setLastScanTime(scanTime);
   }, []);
 
-  const handleLibraryChange = (library: LibraryType) => {
+  const handleLibraryChange = (library) => {
     setIsScanning(false);
     setSelectedLibrary(library);
     setLastResult(null);

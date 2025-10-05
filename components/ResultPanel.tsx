@@ -1,15 +1,7 @@
 
 import React from 'react';
-import { ScanResult, LibraryType } from '../types';
 
-interface ResultPanelProps {
-  lastResult: ScanResult | null;
-  scanHistory: ScanResult[];
-  scanTime: number | null;
-  library: LibraryType;
-}
-
-const ResultPanel: React.FC<ResultPanelProps> = ({ lastResult, scanHistory, scanTime, library }) => {
+const ResultPanel = ({ lastResult, scanHistory, scanTime, library }) => {
   return (
     <div className="bg-gray-800/60 backdrop-blur-md rounded-lg shadow-xl p-6 space-y-6 h-full">
       <div>

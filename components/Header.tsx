@@ -2,12 +2,7 @@
 import React from 'react';
 import { LibraryType } from '../types';
 
-interface HeaderProps {
-  selectedLibrary: LibraryType;
-  onLibraryChange: (library: LibraryType) => void;
-}
-
-const Header: React.FC<HeaderProps> = ({ selectedLibrary, onLibraryChange }) => {
+const Header = ({ selectedLibrary, onLibraryChange }) => {
   return (
     <header className="bg-gray-800/50 backdrop-blur-sm shadow-lg sticky top-0 z-10">
       <div className="container mx-auto px-4 py-3 flex flex-col sm:flex-row justify-between items-center">

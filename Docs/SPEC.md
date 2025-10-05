@@ -1,3 +1,4 @@
+
 # アプリケーション仕様書: Barcode Scanner Comparator
 
 ## 1. 概要
@@ -73,8 +74,8 @@ Webブラウザ上で動作する複数のバーコードスキャナーライ�
 ## 4. 状態管理 (`App.tsx`)
 
 - `selectedLibrary`: ユーザーが選択したライブラリ (`LibraryType`)。
-- `lastResult`: 最新のスキャン結果 (`ScanResult`オブジェクトまたは`null`)。
-- `scanHistory`: スキャン履歴の配列 (`ScanResult[]`)。
+- `lastResult`: 最新のスキャン結果 (オブジェクトまたは`null`)。
+- `scanHistory`: スキャン履歴の配列 (`[]`)。
 - `lastScanTime`: 最新のスキャンにかかった時間 (`number`または`null`)。
 - `isScanning`: スキャナーの動作状態を管理するフラグ (`boolean`)。ライブラリ切り替え時の再初期化を制御する。
 
@@ -84,13 +85,14 @@ Webブラウザ上で動作する複数のバーコードスキャナーライ�
 - `tailwindcss`: スタイリングフレームワーク（CDN経由）。
 - `@zxing/library`: ZXing-JSライブラリ（CDN経由）。
 - `quagga`: QuaggaJSライブラリ（CDN経由）。
+- `@babel/standalone`: ブラウザ上でTSX/JSXをJavaScriptに変換するためのトランスパイラ（CDN経由）。
 
 ## 6. ファイル構成
 
-- `index.html`: アプリケーションのエントリーポイント。CDNライブラリを読み込む。
+- `index.html`: アプリケーションのエントリーポイント。CDNライブラリとBabelを読み込む。
 - `metadata.json`: アプリケーション名とカメラ権限のリクエストを定義。
 - `index.tsx`: ReactアプリケーションをDOMにマウントする。
-- `types.ts`: `LibraryType`や`ScanResult`などの型定義。
+- `types.ts`: `LibraryType`などの共通定数を定義。
 - `App.tsx`: メインのアプリケーションコンポーネント。
 - `components/`
   - `Header.tsx`
@@ -100,3 +102,5 @@ Webブラウザ上で動作する複数のバーコードスキャナーライ�
   - `RULE.txt`
   - `SPEC.md`
   - `HISTORY.md`
+
+**注記:** ソースコードはTypeScriptの構文（`.tsx`, `.ts`）で記述されていますが、ビルドプロセスは不要です。`index.html`で読み込まれたBabelが、ブラウザ上でリアルタイムにコードをJavaScriptに変換して実行します。

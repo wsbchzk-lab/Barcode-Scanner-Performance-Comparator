@@ -1,16 +1,17 @@
+// Fix: Declare global types for third-party libraries attached to the window object.
+declare global {
+  interface Window {
+    ZXing: any;
+    Quagga: any;
+  }
+}
 
 import React, { useRef, useEffect, useCallback } from 'react';
 import { LibraryType } from '../types';
 
-interface ScannerProps {
-  library: LibraryType;
-  onResult: (result: string, scanTime: number) => void;
-  isScanning: boolean;
-}
-
-const Scanner: React.FC<ScannerProps> = ({ library, onResult, isScanning }) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const zxingControlsRef = useRef<any>(null);
+const Scanner = ({ library, onResult, isScanning }) => {
+  const videoRef = useRef(null);
+  const zxingControlsRef = useRef(null);
 
   const stopScan = useCallback(() => {
     // Stop ZXing
@@ -19,12 +20,12 @@ const Scanner: React.FC<ScannerProps> = ({ library, onResult, isScanning }) => {
         zxingControlsRef.current = null;
     }
     // Stop QuaggaJS
-    if ((window as any).Quagga && (window as any).Quagga.running) {
-        (window as any).Quagga.stop();
+    if (window.Quagga && window.Quagga.running) {
+        window.Quagga.stop();
     }
     // Stop camera stream
     if (videoRef.current && videoRef.current.srcObject) {
-      (videoRef.current.srcObject as MediaStream).getTracks().forEach(track => track.stop());
+      videoRef.current.srcObject.getTracks().forEach(track => track.stop());
       videoRef.current.srcObject = null;
     }
   }, []);
@@ -53,7 +54,7 @@ const Scanner: React.FC<ScannerProps> = ({ library, onResult, isScanning }) => {
                 const startTime = performance.now();
 
                 if (library === LibraryType.ZXing) {
-                    const { BrowserMultiFormatReader, NotFoundException } = (window as any).ZXing;
+                    const { BrowserMultiFormatReader, NotFoundException } = window.ZXing;
                     const codeReader = new BrowserMultiFormatReader();
                     
                     const controls = await codeReader.decodeFromStream(stream, videoRef.current, (result, err, controls) => {
@@ -69,7 +70,7 @@ const Scanner: React.FC<ScannerProps> = ({ library, onResult, isScanning }) => {
                     zxingControlsRef.current = controls;
 
                 } else if (library === LibraryType.QuaggaJS) {
-                    (window as any).Quagga.init({
+                    window.Quagga.init({
                         inputStream : {
                             name : "Live",
                             type : "LiveStream",
@@ -79,20 +80,20 @@ const Scanner: React.FC<ScannerProps> = ({ library, onResult, isScanning }) => {
                             readers : ["code_128_reader", "ean_reader", "upc_reader", "codabar_reader"]
                         },
                         locate: true,
-                    }, (err: any) => {
+                    }, (err) => {
                         if (err) {
                             console.error('QuaggaJS initialization error:', err);
                             return;
                         }
-                        (window as any).Quagga.start();
+                        window.Quagga.start();
                     });
 
-                    (window as any).Quagga.onDetected((data: any) => {
+                    window.Quagga.onDetected((data) => {
                         const scanTime = performance.now() - startTime;
                         onResult(data.codeResult.code, scanTime);
-                        (window as any).Quagga.stop();
+                        window.Quagga.stop();
                     });
-                     (window as any).Quagga.onProcessed(() => {});
+                     window.Quagga.onProcessed(() => {});
                 }
             }
         } catch (err) {
