@@ -1,0 +1,7 @@
+{
+  "name": "Barcode Scanner Performance Comparator",
+  "description": "An application to compare the performance (speed and accuracy) of different web-based barcode scanning libraries in real-time.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
